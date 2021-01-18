@@ -20,10 +20,10 @@ exports.liste=(req,res)=>{
 }
 //rechercher des etudiants selon leurs nom
 exports.rechercher=(req,res)=>{
-    etudiantmodel.find({Nom:req.params.nom})
+    etudiantmodel.find({Nom:{$regex:req.params.nom,$options:'i'}})
     .then((data)=>{
-      res.status(200).send(data)
-    }).catch(()=>console.log("l'élève que vous cherché n'est mas dans la base de donnée"));
+          res.status(200).send(data);
+    }).catch(()=>res.status(404).send({message:"l'élève que vous cherché n'est mas dans la base de donnée"}));
 }
 //supprimer un étudiant
 exports.supprimer=(req,res)=>{
